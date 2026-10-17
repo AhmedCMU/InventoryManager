@@ -228,3 +228,49 @@ def display_summary(inventory):
     else:
         for category, count in category_counts.items():
              print(f"{category}: {count}")    
+def display_menu():
+    """Display the Inventory Manager main menu."""
+    print("\nInventory Manager")
+    print("1. View inventory")
+    print("2. Add an item")
+    print("3. Update an item quantity")
+    print("4. Remove an item")
+    print("5. Search inventory")
+    print("6. View inventory summary")
+    print("7. Exit") 
+    
+def main():
+    """Run the Inventory Manager until the user chooses to exit."""
+    inventory = load_inventory(INVENTORY_FILE)
+
+    while True:
+        display_menu()
+        choice = input("Enter your choice (1-7): ").strip()
+
+        if choice == "1":
+            view_inventory(inventory)
+
+        elif choice == "2":
+            add_item(inventory)
+
+        elif choice == "3":
+            update_quantity(inventory)
+
+        elif choice == "4":
+            remove_item(inventory)
+
+        elif choice == "5":
+            search_inventory(inventory)
+
+        elif choice == "6":
+            display_summary(inventory)
+
+        elif choice == "7":
+            print("Thank you for using Inventory Manager. Goodbye!")
+            break
+
+        else:
+            print("Invalid option. Please enter a number from 1 to 7.")
+
+if __name__ == "__main__":
+    main()
