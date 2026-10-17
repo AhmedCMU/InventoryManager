@@ -172,6 +172,11 @@ def remove_item(inventory):
     
 def search_inventory(inventory):
     """Search for inventory items by partial, case-insensitive name."""
+    
+    if not inventory:
+            print("Inventory is empty. Nothing to search.")
+            return
+    
     search_term = input("Enter an item name to search for: ").strip()
 
     if not search_term:
