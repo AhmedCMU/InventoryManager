@@ -102,4 +102,45 @@ def add_item(inventory):
 
     print("Item added successfully.")
 
+def update_quantity(inventory):
+    """Update the quantity of an existing inventory item."""
+    if not inventory:
+        print("No inventory items found.")
+        return
 
+    view_inventory(inventory)
+
+    selection = input("Enter the item number to update: ").strip()
+
+    try:
+        item_number = int(selection)
+    except ValueError:
+        print("Invalid item number.")
+        return
+
+    if item_number < 1 or item_number > len(inventory):
+        print("Invalid item number.")
+        return
+
+    new_quantity_text = input("Enter the new quantity: ").strip()
+
+    try:
+        new_quantity = int(new_quantity_text)
+    except ValueError:
+        print("Quantity must be a nonnegative whole number.")
+        return
+
+    if new_quantity < 0:
+        print("Quantity must be a nonnegative whole number.")
+        return
+
+    item = inventory[item_number - 1]
+    item["quantity"] = new_quantity
+
+    save_inventory(inventory, INVENTORY_FILE)
+
+    print(
+        f"Updated {item['name']} quantity to {new_quantity}."
+    )
+
+#remove item function
