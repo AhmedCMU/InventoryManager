@@ -169,6 +169,7 @@ def remove_item(inventory):
     save_inventory(inventory, INVENTORY_FILE)
 
     print(f"Item removed: {removed_item['name']}")
+    
 def search_inventory(inventory):
     """Search for inventory items by partial, case-insensitive name."""
     search_term = input("Enter an item name to search for: ").strip()
@@ -195,4 +196,35 @@ def search_inventory(inventory):
             f"{item['category']} | "
             f"Quantity: {item['quantity']}"
         )
-    
+def display_summary(inventory):
+    """Display inventory totals and counts by category."""
+    total_items = len(inventory)
+    total_quantity = 0
+    low_stock_items = 0
+    category_counts = {}
+
+    for item in inventory:
+        total_quantity += item["quantity"]
+
+        if item["quantity"] < 5:
+            low_stock_items += 1
+
+        category = item["category"]
+
+        if category in category_counts:
+            category_counts[category] += 1
+        else:
+            category_counts[category] = 1
+
+    print("\nInventory Summary")
+    print(f"Unique inventory items: {total_items}")
+    print(f"Total quantity: {total_quantity}")
+    print(f"Low-stock items: {low_stock_items}")
+
+    print("Items in each category:")
+
+    if not category_counts:
+        print("No categories found.")
+    else:
+        for category, count in category_counts.items():
+             print(f"{category}: {count}")    
