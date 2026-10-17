@@ -144,3 +144,29 @@ def update_quantity(inventory):
     )
 
 #remove item function
+def remove_item(inventory):
+    """Remove an inventory item selected by its number."""
+    if not inventory:
+        print("No inventory items found.")
+        return
+
+    view_inventory(inventory)
+
+    selection = input("Enter the item number to remove: ").strip()
+
+    try:
+        item_number = int(selection)
+    except ValueError:
+        print("Invalid item number.")
+        return
+
+    if item_number < 1 or item_number > len(inventory):
+        print("Invalid item number.")
+        return
+
+    removed_item = inventory.pop(item_number - 1)
+
+    save_inventory(inventory, INVENTORY_FILE)
+
+    print(f"Item removed: {removed_item['name']}")
+    
