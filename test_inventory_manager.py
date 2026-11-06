@@ -426,8 +426,7 @@ def test_add_item_success(monkeypatch, tmp_path):
     assert inventory == [
         {"name": "Tablet", "category": "Electronics", "quantity": 6}
     ]
-    assert (tmp_path / "inventory.txt").exists()  def test_add_item_success(monkeypatch, tmp_path):
-    import inventory_manager
+    assert (tmp_path / "inventory.txt").exists()
 
     inventory = []
 
