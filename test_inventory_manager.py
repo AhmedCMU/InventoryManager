@@ -8,6 +8,7 @@ from inventory_manager import (
     update_item_quantity,
     calculate_summary,
     validate_new_item,
+    add_item, 
 )
 
 @pytest.fixture
@@ -399,3 +400,55 @@ def test_summary_low_stock_threshold(quantity, expected_low_stock):
     summary = calculate_summary(inventory)
 
     assert summary["low_stock_items"] == expected_low_stock
+    
+def test_add_item_success(monkeypatch, tmp_path):
+    import inventory_manager
+
+    inventory = []
+
+    monkeypatch.setattr(
+        "builtins.input",
+        lambda prompt: {
+            "Enter the item name: ": "Tablet",
+            "Enter the category: ": "Electronics",
+            "Enter the quantity: ": "6"
+        }[prompt]
+    )
+
+    monkeypatch.setattr(
+        inventory_manager,
+        "INVENTORY_FILE",
+        str(tmp_path / "inventory.txt")
+    )
+
+    add_item(inventory)
+
+    assert inventory == [
+        {"name": "Tablet", "category": "Electronics", "quantity": 6}
+    ]
+    assert (tmp_path / "inventory.txt").exists()  def test_add_item_success(monkeypatch, tmp_path):
+    import inventory_manager
+
+    inventory = []
+
+    monkeypatch.setattr(
+        "builtins.input",
+        lambda prompt: {
+            "Enter the item name: ": "Tablet",
+            "Enter the category: ": "Electronics",
+            "Enter the quantity: ": "6"
+        }[prompt]
+    )
+
+    monkeypatch.setattr(
+        inventory_manager,
+        "INVENTORY_FILE",
+        str(tmp_path / "inventory.txt")
+    )
+
+    add_item(inventory)
+
+    assert inventory == [
+        {"name": "Tablet", "category": "Electronics", "quantity": 6}
+    ]
+    assert (tmp_path / "inventory.txt").exists() 
