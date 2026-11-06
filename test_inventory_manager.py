@@ -9,6 +9,7 @@ from inventory_manager import (
     calculate_summary,
     validate_new_item,
     add_item, 
+    main, 
 )
 
 @pytest.fixture
@@ -451,3 +452,19 @@ def test_add_item_success(monkeypatch, tmp_path):
         {"name": "Tablet", "category": "Electronics", "quantity": 6}
     ]
     assert (tmp_path / "inventory.txt").exists() 
+    
+def test_main_exits_when_user_selects_seven(monkeypatch, capsys, tmp_path):
+    import inventory_manager
+
+    monkeypatch.setattr(
+        inventory_manager,
+        "INVENTORY_FILE",
+        str(tmp_path / "inventory.txt")
+    )
+
+    monkeypatch.setattr("builtins.input", lambda prompt: "7")
+
+    main()
+
+    captured = capsys.readouterr()
+    assert "Goodbye!" in captured.out
